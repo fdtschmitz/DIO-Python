@@ -6,7 +6,7 @@ import pprint
 import pymongo as pym
 import datetime
 
-secret = ".secrets.txt"
+secret = "..secrets.txt"
 
 with open(secret, 'r') as file:
     secrets = file.read()
