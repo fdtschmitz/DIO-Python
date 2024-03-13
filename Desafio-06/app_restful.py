@@ -1,4 +1,5 @@
-from flask import Flask, request
+import requests
+from flask import Flask, request, render_template
 from flask_restful import Resource, Api
 from habilidades import Habilidades, UpdateHabilidades
 import json
@@ -58,6 +59,17 @@ api.add_resource(Desenvolvedor, '/dev/<int:id>/')
 api.add_resource(Lista_Devs, '/dev/')
 api.add_resource(Habilidades, '/habilidades/')
 api.add_resource(UpdateHabilidades, '/habilidades/<int:id>')
+
+
+@app.route('/')
+def index():
+    response = requests.get('http://127.0.0.1:5000/habilidades/')
+    if response.status_code == 200:
+        data = response.json()
+        return render_template('index.html', data=data)
+    else:
+        return 'Failed to fetch data from the API', 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
